@@ -1,0 +1,21 @@
+{
+  "include": [
+    "*.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "src/**/*.tsx",
+    "src/**/*.d.ts",
+    "src/**/*.ts"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["node", "vite/client", "element-plus/global"],
+    "jsx": "preserve",
+    "jsxImportSource": "vue"
+  }
+}
