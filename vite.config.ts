@@ -20,7 +20,7 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     })
   ],
-  base: 'https://github.com/Wei-xu293/vue-demo',
+  base: '/vue-demo/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
