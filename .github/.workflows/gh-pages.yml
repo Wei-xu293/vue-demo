@@ -1,0 +1,54 @@
+name: Deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      useyarn:
+        description: 'Use Yarn instead of NPM'
+        required: true
+        default: 'false'
+      cname:
+        description: 'Custom domain (CNAME)'
+        required: false
+        default: 'none'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.4
+
+      - name: Install and Build
+        run: |
+          if [ "${{ inputs.useyarn }}" = "true" ]; then
+            yarn install --frozen-lockfile
+            yarn build
+          else
+            npm ci
+            npm run build
+          fi
+
+      - name: Post-Build Configuration
+        run: |
+          cd dist
+          ln -s index.html 404.html
+          if [ "${{ inputs.cname }}" != "none" ] && [ -not -z "${{ inputs.cname }}" ]; then
+            echo "${{ inputs.cname }}" > CNAME
+          fi
+
+      - name: Upload Artifact
+        uses: actions/actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v5

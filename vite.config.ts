@@ -8,16 +8,19 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(),
-  AutoImport({
-    imports: ['vue'],
-    dts: 'src/auto-import.d.ts',
-    resolvers: [ElementPlusResolver()],
-  }),
-  Components({
-    resolvers: [ElementPlusResolver()],
-  })
+  plugins: [
+    vue(),
+    vueJsx(),
+    AutoImport({
+      imports: ['vue'],
+      dts: 'src/auto-import.d.ts',
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    })
   ],
+  base: 'https://github.com/Wei-xu293/vue-demo',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
